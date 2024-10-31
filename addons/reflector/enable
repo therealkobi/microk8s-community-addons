@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+source $SNAP/actions/common/utils.sh
+
+HELM="$SNAP/microk8s-helm3.wrapper"
+REFLECTOR_NAMESPACE="reflector"
+
+check_prerequisites() {
+    "$SNAP/microk8s-enable.wrapper" helm3
+}
+
+install_reflector(){
+    echo "Installing reflector addon now"
+
+    $HELM repo add --force-update emberstack https://emberstack.github.io/helm-charts
+    $HELM upgrade --install reflector emberstack/reflector --namespace $REFLECTOR_NAMESPACE --create-namespace
+}
+
+check_prerequisites
+
+install_reflector
+
+echo "Reflector has been successfully installed!"
