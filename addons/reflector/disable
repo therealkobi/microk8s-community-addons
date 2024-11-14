@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -e
+
+source $SNAP/actions/common/utils.sh
+
+KUBECTL="$SNAP/microk8s-kubectl.wrapper"
+HELM="$SNAP/microk8s-helm3.wrapper"
+REFLECTOR_NAMESPACE="reflector"
+
+check_prerequisites() {
+    "$SNAP/microk8s-enable.wrapper" helm3
+}
+
+uninstall_reflector(){
+    echo "Uninstalling reflector addon now"
+
+    $HELM delete reflector --namespace $REFLECTOR_NAMESPACE
+    $KUBECTL delete ns $REFLECTOR_NAMESPACE
+    $HELM repo remove emberstack
+}
+
+
+check_prerequisites
+
+uninstall_reflector
+
+echo "Reflector has been successfully uninstalled!"
