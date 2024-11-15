@@ -261,7 +261,7 @@ microk8s-addons:
 
     - name: "reflector"
       description: "Monitor resources (secrets and configmaps) and mirror them in the same or other namespaces"
-      version: "0.0.1"
+      version: "7.1.288"
       check_status: "deployment.apps/reflector"
       supported_architectures:
         - arm64
